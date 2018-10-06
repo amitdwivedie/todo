@@ -1,0 +1,44 @@
+<div id="newFilter">
+  <form>
+    <button type="button" class="btn float-left" (click)="isAdd=true;todo=[]">New</button>
+    <div class="form-group float-right">
+      <select #flTask class="form-control" id="sel1" (change)="filterTask($event.target.value)">
+        <option value="ALL">ALL</option>
+        <option value="NEW">NEW</option>
+        <option value="COMPLETED">COMPLETED</option>
+      </select>
+    </div>
+  </form>
+</div>
+
+<div id="todo-body">
+  <div class="card" *ngFor="let task of todo">
+    <div class="card-body" >
+        <div class="row">
+          <div class="col-6" style="text-align: left;word-wrap: break-word;">{{task.title}}</div>
+          <div class="col-4" style="text-align: right" *ngIf="task.status === 'COMPLETED'">Status: {{task.status}}</div>
+          <div *ngIf="task.status != 'COMPLETED'" class="col-4" style="text-align: right"><button typeof="button" class="btn btn-primary" type="button" (click)="completeTask(task.id)">Complete</button></div>
+          <div class="col-2" style="text-align: right"><button typeof="button" class="btn btn-danger" type="button" (click)="delete(task.id)">Delete</button></div>
+        </div>
+    </div>
+  </div>
+  <div class="card" *ngIf="!isAdd && todo.length ==0">
+    <div class="card-body">
+      There is no task created yet.
+    </div>
+  </div>
+  <div class="card" id="addTodo" *ngIf="isAdd">
+    <div class="card-body">
+      <form class="form-horizontal">
+        <div class="form-group">
+            <textarea [(ngModel)]="task" class="form-control" id="task" placeholder="Add Task" name="task" style="resize: none"></textarea>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-success float-right" style="margin-right: 2px" (click)="addTask()">Add</button>
+          <button type="button" class="btn btn-primary float-right" style="margin-right: 2px" (click)="isAdd=false">CANCEL</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
